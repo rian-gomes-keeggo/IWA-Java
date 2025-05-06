@@ -26,8 +26,15 @@ jobs:
       - name: Login Fortify SSC
         run: |
           echo "Conectando à Fortify Platform"
-          fcli ssc session login --url $FCLI_DEFAULT_SSC_URL -u $FCLI_DEFAULT_SSC_USER -p $FCLI_DEFAULT_SSC_PASSWORD --insecure
+          fcli ssc session login --url $FCLI_DEFAULT_SSC_URL -u $FCLI_DEFAULT_SSC_USER -p $FCLI_DEFAULT_SSC_PASSWORD --insecure --
       - name: Empacotamento da aplicação
         run: |
           echo "Empacotando a aplicação"
           scancentral package -bt mvn -o package.zip
+      - name: Enviando a análise
+        run: |
+          fcli sc-sast scan start --publish-to=$SSC_APP_VERSION_ID --sensor-version=$SC_SAST_SENSOR_VERSION --file=package.zip --store=Id
+      - name: Esperando resultado do Scan
+        run: |
+          fcli sc-sast scan wait-for ::Id:: --interval=30s
+          fcli ssc issue count --appversion=$SSC_APP_VERSION_ID
