@@ -33,7 +33,7 @@ jobs:
           scancentral package -bt mvn -o package.zip
       - name: Enviando a análise
         run: |
-          fcli sc-sast scan start --publish-to=$SSC_APP_VERSION_ID --sensor-version=$SC_SAST_SENSOR_VERSION --file=package.zip --store=Id --scan-args -scan
+          fcli sc-sast scan start --publish-to=$SSC_APP_VERSION_ID --file=package.zip --store=Id --scan-args -scan
       - name: Esperando resultado do Scan
         run: |
           fcli sc-sast scan wait-for ::Id:: --interval=60s
