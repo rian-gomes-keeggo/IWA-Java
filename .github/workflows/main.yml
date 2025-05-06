@@ -17,7 +17,7 @@ jobs:
         FCLI_DEFAULT_SSC_CI_TOKEN: ${{ secrets.FCLI_DEFAULT_SSC_CI_TOKEN }}
         FCLI_DEFAULT_SSC_URL: ${{ secrets.FCLI_DEFAULT_SSC_URL }}
         SSC_APP_VERSION_ID: ${{ secrets.SSC_APP_VERSION_ID }}
-        SC_SAST_SENSOR_VERSION: 24.2
+        SC_SAST_SENSOR_VERSION: 24.4
 
     steps:
       - name: Checkout do repositório
@@ -33,7 +33,7 @@ jobs:
           scancentral package -bt mvn -o package.zip
       - name: Enviando a análise
         run: |
-          fcli sc-sast scan start --publish-to=$SSC_APP_VERSION_ID --sensor-version=$SC_SAST_SENSOR_VERSION --file=package.zip --store=Id
+          fcli sc-sast scan start --publish-to=$SSC_APP_VERSION_ID --sensor-version=$SC_SAST_SENSOR_VERSION --file=package.zip --store=Id --scan-args -scan
       # - name: Esperando resultado do Scan
       #  run: |
       #   fcli sc-sast scan wait-for ::Id:: --interval=30s
