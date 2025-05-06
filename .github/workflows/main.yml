@@ -40,5 +40,4 @@ jobs:
       #    fcli ssc issue count --appversion=$SSC_APP_VERSION_ID
       - name : Logout da ferramenta
         run: |
-          fcli sc-sast session logout
           fcli ssc session logout  
