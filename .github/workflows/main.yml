@@ -27,10 +27,6 @@ jobs:
         run: |
           echo "Conectando à Fortify Platform"
           fcli ssc session login --url $FCLI_DEFAULT_SSC_URL -u $FCLI_DEFAULT_SSC_USER -p $FCLI_DEFAULT_SSC_PASSWORD -c $FCLI_DEFAULT_SC_SAST_CLIENT_AUTH_TOKEN
-      - name: Login Scan central
-        run: |
-          echo "Conectando ao Fortify Scan central"
-          fcli sc-sast session login --url $FCLI_DEFAULT_SSC_URL -u $FCLI_DEFAULT_SSC_USER -p $FCLI_DEFAULT_SSC_PASSWORD -c $FCLI_DEFAULT_SC_SAST_CLIENT_AUTH_TOKEN
       - name: Empacotamento da aplicação
         run: |
           echo "Empacotando a aplicação"
