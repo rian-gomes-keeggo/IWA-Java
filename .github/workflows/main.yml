@@ -1,0 +1,29 @@
+name: Fortify Scan
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  fortify:
+    runs-on: ubuntu-latest
+
+    container:
+      image: fortifydocker/fortify-ci-tools:latest-jdk-17
+      env:
+        FCLI_DEFAULT_SC_SAST_CLIENT_AUTH_TOKEN: ${{ secrets.FCLI_DEFAULT_SC_SAST_CLIENT_AUTH_TOKEN }}
+        FCLI_DEFAULT_SSC_USER: ${{ secrets.FCLI_DEFAULT_SSC_USER }}
+        FCLI_DEFAULT_SSC_PASSWORD: ${{ secrets.FCLI_DEFAULT_SSC_PASSWORD }}
+        FCLI_DEFAULT_SSC_CI_TOKEN: ${{ secrets.FCLI_DEFAULT_SSC_CI_TOKEN }}
+        FCLI_DEFAULT_SSC_URL: ${{ secrets.FCLI_DEFAULT_SSC_URL }}
+        SSC_APP_VERSION_ID: ${{ secrets.SSC_APP_VERSION_ID }}
+        SC_SAST_SENSOR_VERSION: 24.2
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v3
+
+      - name: Login Fortify SSC
+        run: |
+          echo "Conectando à Fortify Platform"
+          fcli ssc session login --url $FCLI_DEFAULT_SSC_URL -u $FCLI_DEFAULT_SSC_USER -p $FCLI_DEFAULT_SSC_PASSWORD --insecure
