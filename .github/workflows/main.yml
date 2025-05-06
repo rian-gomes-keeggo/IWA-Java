@@ -26,7 +26,11 @@ jobs:
       - name: Login Fortify SSC
         run: |
           echo "Conectando à Fortify Platform"
-          fcli ssc session login --url $FCLI_DEFAULT_SSC_URL -u $FCLI_DEFAULT_SSC_USER -p $FCLI_DEFAULT_SSC_PASSWORD --insecure -c $FCLI_DEFAULT_SC_SAST_CLIENT_AUTH_TOKEN
+          fcli ssc session login --url $FCLI_DEFAULT_SSC_URL -u $FCLI_DEFAULT_SSC_USER -p $FCLI_DEFAULT_SSC_PASSWORD -c $FCLI_DEFAULT_SC_SAST_CLIENT_AUTH_TOKEN
+      - name: Login Scan central
+        run: |
+          echo "Conectando ao Fortify Scan central"
+          fcli sc-sast session login --url $FCLI_DEFAULT_SSC_URL -u $FCLI_DEFAULT_SSC_USER -p $FCLI_DEFAULT_SSC_PASSWORD -c $FCLI_DEFAULT_SC_SAST_CLIENT_AUTH_TOKEN
       - name: Empacotamento da aplicação
         run: |
           echo "Empacotando a aplicação"
@@ -34,7 +38,11 @@ jobs:
       - name: Enviando a análise
         run: |
           fcli sc-sast scan start --publish-to=$SSC_APP_VERSION_ID --sensor-version=$SC_SAST_SENSOR_VERSION --file=package.zip --store=Id
-      - name: Esperando resultado do Scan
+      # - name: Esperando resultado do Scan
+      #  run: |
+      #   fcli sc-sast scan wait-for ::Id:: --interval=30s
+      #    fcli ssc issue count --appversion=$SSC_APP_VERSION_ID
+      - name : Logout da ferramenta
         run: |
-          fcli sc-sast scan wait-for ::Id:: --interval=30s
-          fcli ssc issue count --appversion=$SSC_APP_VERSION_ID
+          fcli sc-sast session logout
+          fcli ssc session logout  
