@@ -17,3 +17,9 @@ jobs:
       - name: Scan Semgrep
         run: |
           semgrep scan --json --json-output=semgrep.json
+      - name: Ver conteúdo do semgrep.json
+        run: |
+          echo "Arquivo semgrep.json gerado em:"
+          pwd
+          ls -lah
+          cat semgrep.json
