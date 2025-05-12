@@ -1,0 +1,19 @@
+name: Semgrep Scan
+
+on:
+  push:
+    branches: [Semgrep]
+
+jobs:
+  fortify:
+    runs-on: ubuntu-latest
+
+    container:
+      image: semgrep/semgrep:latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v3
+
+      - name: Scan Semgrep
+        run: |
+          semgrep scan --json --json-output=semgrep.json
