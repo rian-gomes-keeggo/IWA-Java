@@ -5,7 +5,7 @@ on:
     branches: [Semgrep]
 
 jobs:
-  fortify:
+  Semgrep:
     runs-on: ubuntu-latest
 
     container:
