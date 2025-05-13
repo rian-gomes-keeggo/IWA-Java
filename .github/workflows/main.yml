@@ -36,11 +36,11 @@ jobs:
           fcli sc-sast scan start --publish-to=$SSC_APP_VERSION_ID --file=package.zip --store=Id --scan-args -scan
       - name: Esperando resultado do Scan
         run: |
-          fcli sc-sast scan wait-for ::Id:: --interval=60s
+          fcli sc-sast scan wait-for ::Id:: --interval=5m
           fcli ssc issue count --appversion=$SSC_APP_VERSION_ID
       - name: Baixando o fpr
         run: |
-          fcli ssc appversion download-state --include-sources --file app.fpr SSC_APP_VERSION_ID
+          fcli ssc appversion download-state --include-sources --file app.fpr $SSC_APP_VERSION_ID
       - name: Analisando com o MOBB
         uses: mobb-dev/action@v1
         with:
