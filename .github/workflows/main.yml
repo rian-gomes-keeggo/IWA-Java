@@ -2,7 +2,7 @@ name: Fortify Scan
 
 on:
   push:
-    branches: [main]
+    branches: [fortify_mob]
 
 jobs:
   fortify:
@@ -38,6 +38,17 @@ jobs:
         run: |
           fcli sc-sast scan wait-for ::Id:: --interval=60s
           fcli ssc issue count --appversion=$SSC_APP_VERSION_ID
+      - name: Baixando o fpr
+        run: |
+          fcli ssc appversion download-state --include-sources --file app.fpr SSC_APP_VERSION_ID
+      - name: Analisando com o MOBB
+        uses: mobb-dev/action@v1
+        with:
+          report-file: "app.fpr"
+          api-key: ${{ secrets.MOBB_API_TOKEN }}
+          github-token: ${{ secrets.GH_TOKEN }}
+          mobb-project-name: "TesteRepo"
+
       - name : Logout da ferramenta
         run: |
           fcli ssc session logout  
