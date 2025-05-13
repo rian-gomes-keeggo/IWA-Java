@@ -42,7 +42,7 @@ jobs:
         run: |
           fcli ssc appversion download-state --include-sources --file app.fpr $SSC_APP_VERSION_ID
       - name: Analisando com o MOBB
-        uses: mobb-dev/action@latest
+        uses: mobb-dev/action@v1.1
         with:
           report-file: "app.fpr"
           api-key: ${{ secrets.MOBB_API_TOKEN }}
