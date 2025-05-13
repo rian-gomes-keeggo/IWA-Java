@@ -41,6 +41,12 @@ jobs:
       - name: Baixando o fpr
         run: |
           fcli ssc appversion download-state --include-sources --file app.fpr $SSC_APP_VERSION_ID
+      - name: Arquivar FPR
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fpr
+          path: app.fpr
       - name: Analisando com o MOBB
         uses: mobb-dev/action@v1.1
         with:
