@@ -7,7 +7,12 @@ on:
 jobs:
   fortify:
     runs-on: ubuntu-latest
-
+    permissions:
+      pull-requests: write
+      statuses: write
+      contents: read
+      actions: read
+      
     container:
       image: fortifydocker/fortify-ci-tools:latest-jdk-17
       env:
