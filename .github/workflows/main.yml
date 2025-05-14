@@ -55,7 +55,6 @@ jobs:
           report-file: "app.fpr"
           api-key: ${{ secrets.MOBB_API_TOKEN }}
           github-token: ${{ secrets.GH_TOKEN }}
-          mobb-project-name: "TesteRepo"
       - name : Logout da ferramenta
         run: |
           fcli ssc session logout  
