@@ -57,4 +57,3 @@ jobs:
       - name : Logout da ferramenta
         run: |
           fcli ssc session logout  
-#
