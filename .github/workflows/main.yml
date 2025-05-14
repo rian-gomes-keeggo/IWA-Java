@@ -47,6 +47,8 @@ jobs:
         with:
           name: fpr
           path: app.fpr
+      - name: Marcar repositório como seguro para Git
+        run: git config --global --add safe.directory ".git"
       - name: Analisando com o MOBB
         uses: mobb-dev/action@v1.1
         with:
